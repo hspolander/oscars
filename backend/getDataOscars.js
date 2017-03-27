@@ -28,8 +28,8 @@ module.exports = function (url, cb) {
      		'year' : date.substr(date.length - 4),
      		'date' : date,
         'can_predict' : 1,
-        'name' : page('#firstHeading').text(),
-     		'current_time' : current_time,
+        'ceremony_name' : page('#firstHeading').text(),
+     		'last_time_updated' : current_time,
      		'nominees' : resultlist};
     
        	tableTdList = table.find('td');
