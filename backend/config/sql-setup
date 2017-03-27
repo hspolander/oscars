@@ -1,8 +1,9 @@
 CREATE TABLE oscars (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
 year YEAR(4) NOT NULL,
 ceremony_name VARCHAR(255) NOT NULL,
-date DATE,
+date VARCHAR(20) NOT NULL,
 host VARCHAR(255) NOT NULL,
+can_predict TINYINT(1) NOT NULL,
 last_time_updated TIMESTAMP);
 
 CREATE TABLE user (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
@@ -18,27 +19,14 @@ nominee VARCHAR(255) NOT NULL,
 category VARCHAR(255) NOT NULL,
 fk_oscars_id INT);
 
-ALTER TABLE nominee
-ADD CONSTRAINT FK_nominee_oscars_id 
-FOREIGN KEY (fk_oscars_id) REFERENCES oscars(id) 
-ON UPDATE CASCADE
-ON DELETE CASCADE;
-
 
 CREATE TABLE predictions 
 (
 id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-fk_oscars_id INT,
 fk_nominee_id INT,
 fk_user_id INT, 
 heart TINYINT(1),
 brain TINYINT(1));
-
-ALTER TABLE predictions 
-ADD CONSTRAINT FK_prediction_oscars_id 
-FOREIGN KEY (fk_oscars_id) REFERENCES oscars(id) 
-ON UPDATE CASCADE
-ON DELETE CASCADE;
 
 ALTER TABLE predictions 
 ADD CONSTRAINT FK_prediction_nominee_id 
@@ -49,6 +37,12 @@ ON DELETE CASCADE;
 ALTER TABLE predictions 
 ADD CONSTRAINT FK_prediction_user_id 
 FOREIGN KEY (fk_user_id) REFERENCES user(id) 
+ON UPDATE CASCADE
+ON DELETE CASCADE;
+
+ALTER TABLE nominee
+ADD CONSTRAINT FK_nominee_oscars_id 
+FOREIGN KEY (fk_oscars_id) REFERENCES oscars(id) 
 ON UPDATE CASCADE
 ON DELETE CASCADE;
 
