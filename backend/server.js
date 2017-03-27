@@ -4,7 +4,6 @@ var bodyParser  = require("body-parser");
 var md5 = require('MD5');
 var rest = require("./REST.js");
 var app  = express();
-var scrapeOscars = require('./getDataOscars.js');
 
 function REST(){
     var self = this;
