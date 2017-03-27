@@ -1,0 +1,55 @@
+CREATE TABLE oscars (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+year YEAR(4) NOT NULL,
+ceremony_name VARCHAR(255) NOT NULL,
+date DATE,
+host VARCHAR(255) NOT NULL,
+last_time_updated TIMESTAMP);
+
+CREATE TABLE user (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+name VARCHAR(255) NOT NULL,
+mail VARCHAR(255) NOT NULL,
+added TIMESTAMP);
+
+CREATE TABLE nominee
+(
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+won TINYINT(1) NOT NULL,
+nominee VARCHAR(255) NOT NULL,
+category VARCHAR(255) NOT NULL,
+fk_oscars_id INT);
+
+ALTER TABLE nominee
+ADD CONSTRAINT FK_nominee_oscars_id 
+FOREIGN KEY (fk_oscars_id) REFERENCES oscars(id) 
+ON UPDATE CASCADE
+ON DELETE CASCADE;
+
+
+CREATE TABLE predictions 
+(
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+fk_oscars_id INT,
+fk_nominee_id INT,
+fk_user_id INT, 
+heart TINYINT(1),
+brain TINYINT(1));
+
+ALTER TABLE predictions 
+ADD CONSTRAINT FK_prediction_oscars_id 
+FOREIGN KEY (fk_oscars_id) REFERENCES oscars(id) 
+ON UPDATE CASCADE
+ON DELETE CASCADE;
+
+ALTER TABLE predictions 
+ADD CONSTRAINT FK_prediction_nominee_id 
+FOREIGN KEY (fk_nominee_id) REFERENCES nominee(id) 
+ON UPDATE CASCADE
+ON DELETE CASCADE;
+
+ALTER TABLE predictions 
+ADD CONSTRAINT FK_prediction_user_id 
+FOREIGN KEY (fk_user_id) REFERENCES user(id) 
+ON UPDATE CASCADE
+ON DELETE CASCADE;
+
+GRANT ALL PRIVILEGES ON `oscars`.* TO 'oscarsuser'@'localhost'
