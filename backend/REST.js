@@ -7,9 +7,6 @@ function REST_ROUTER(router,connection,md5) {
 }
 
 REST_ROUTER.prototype.handleRoutes= function(router,connection,md5) {
-    router.get("/getAllOscars",function(req,res){
-           
-    });
 
     router.get("/getOscarsByYear",function(req,res){
         var ceremonyNumber = req.query.ceremony_name.toString();
@@ -54,31 +51,6 @@ REST_ROUTER.prototype.handleRoutes= function(router,connection,md5) {
                 res.json({"Error" : false, "Message" : "Success", "data" : rows});
             }
         });    
-    });
-
-    router.get("/getYearByCeremonyName",function(req,res){
-        var query = "SELECT * FROM oscars";
-        var table = ["user_login"];
-        query = mysql.format(query,table);
-        connection.query(query,function(err,rows){
-            if(err) {
-                res.json({"Error" : true, "Message" : "Error executing MySQL query"});
-            } else {
-                res.json({"Error" : false, "Message" : "Success", "Users" : rows});
-            }
-        });   
-    });
-    router.get("/deleteOscarsByYear",function(req,res){
-        var query = "DELETE * FROM oscars where ?? = ?";
-        var table = ['year', req.query.year];
-        query = mysql.format(query,table);
-        connection.query(query,function(err,rows){
-            if(err) {
-                res.json({"Error" : true, "Message" : "Error executing MySQL query"});
-            } else {
-                res.json({"Error" : false, "Message" : "Success", "Action" : "Deketed from year "+ req.query.year});
-            }
-        });
     });
 }
 
