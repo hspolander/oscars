@@ -25,7 +25,7 @@ module.exports = function (url, cb) {
            	
       tableArray = {'ceremony_name': page('#firstHeading').text(),
      	  'host' : page('.infobox.vevent').find('th:contains("Hosted by")').next().text(),
-     		'year' : date.substr(date.length - 4),
+     		'year' : date.match(/(\d{4})/)[0],
      		'date' : date,
         'can_predict' : 1,
         'ceremony_name' : page('#firstHeading').text(),
@@ -39,27 +39,32 @@ module.exports = function (url, cb) {
        		nomineeList = [];
 
           for (var j =  0; j < nomineeLiItems.length; j++) {
-         	  nomineeList.push(page(nomineeLiItems[j]).find('a').first().text());
+            let nominee;
+            if (page(nomineeLiItems[j]).find('a').first().text() !== '') {
+              nominee = page(nomineeLiItems[j]).find('a').first().text();
+            } else {
+              nominee = page(nomineeLiItems[j]).find('i').first().text();
+            }
+         	  
             let category = page(tableTdList[l]).find('div a').text();
-                  
             //Handles older oscars wiki formatting
             if (category === "") {
               oldOscarsCategoryTable = table.find('th');
               category = page(oldOscarsCategoryTable[l]).find('th a').text();
             }
 
-         		if (page(nomineeLiItems[j]).find('b').find('a').first().text()) {
+         		if (page(nomineeLiItems[j]).find('b').find('a').first().text() || page(nomineeLiItems[j]).find('b').find('i').first().text()) {
               winners = winners + 1;
          					
               resultlist.push(
               { 'category': category,
-            	 	'nominee' : page(nomineeLiItems[j]).find('a').first().text(),
+            	 	'nominee' : nominee,
 	          	 	'winner' : 1,
               });
            		} else {
               resultlist.push(
 		        	{  'category': category,
-		             'nominee' : page(nomineeLiItems[j]).find('a').first().text(),
+		             'nominee' : nominee,
 			           'winner' : 0,
               });
            	  }
