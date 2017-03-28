@@ -12,8 +12,19 @@ REST_ROUTER.prototype.handleRoutes= function(router,connection,md5) {
     });
 
     router.get("/getOscarsByYear",function(req,res){
-        
-        scrapeOscars("https://en.wikipedia.org/w/index.php?title="+req.query.ceremony_name+"th_Academy_Awards", (err, data) => {
+        var ceremonyNumber = req.query.ceremony_name.toString();
+
+        if (ceremonyNumber.slice(-1) === '1' && (req.query.ceremony_name > 20 || req.query.ceremony_name < 10)) {
+            ceremonyNumber = ceremonyNumber + 'st';
+        } else if (ceremonyNumber.slice(-1) === '2' && (req.query.ceremony_name > 20 || req.query.ceremony_name < 10)) {
+            ceremonyNumber = ceremonyNumber + 'nd';
+        } else if (ceremonyNumber.slice(-1) === '3' && (req.query.ceremony_name > 20 || req.query.ceremony_name < 10)) {
+            ceremonyNumber = ceremonyNumber + 'rd';
+        } else {
+            ceremonyNumber = ceremonyNumber + 'th';
+        }        
+
+        scrapeOscars("https://en.wikipedia.org/wiki/"+ceremonyNumber+"_Academy_Awards", (err, data) => {
         if(err) {
                 res.json({"Error" : true, "Message" : "Error executing request. Please check year"});
             } else {
