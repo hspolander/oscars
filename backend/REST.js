@@ -40,18 +40,22 @@ REST_ROUTER.prototype.handleRoutes= function(router,connection,md5) {
             }   
         });
     });
+
     router.get("/getOscarsById",function(req,res){
-        var query = "SELECT * FROM oscars";
-        var table = ['id', req.query.id];
+        var query = "SELECT nominee.category, nominee.nominee, nominee.won, " +
+                                    "oscars.year, oscars.ceremony_name, oscars.date, oscars.host, oscars.can_predict "+
+                                    "FROM nominee, oscars WHERE oscars.id = ? AND nominee.fk_oscars_id = oscars.id";
+        var table = [req.query.id];
         query = mysql.format(query,table);
         connection.query(query,function(err,rows){
             if(err) {
-                res.json({"Error" : true, "Message" : "Error executing MySQL query"});
+                res.json({"Error" : true, "Message" : "Error executing MySQL query: "+ err});
             } else {
-                res.json({"Error" : false, "Message" : "Success", "Users" : rows});
+                res.json({"Error" : false, "Message" : "Success", "data" : rows});
             }
         });    
     });
+
     router.get("/getYearByCeremonyName",function(req,res){
         var query = "SELECT * FROM oscars";
         var table = ["user_login"];
