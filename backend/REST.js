@@ -42,8 +42,8 @@ REST_ROUTER.prototype.handleRoutes= function(router,connection,md5) {
         var query = "SELECT nominee.category, nominee.nominee, nominee.won, " +
                                     "oscars.year, oscars.ceremony_name, oscars.date, oscars.host, oscars.can_predict "+
                                     "FROM nominee, oscars WHERE oscars.id = ? AND nominee.fk_oscars_id = oscars.id";
-        var table = [req.query.id];
-        query = mysql.format(query,table);
+        var params = [req.query.id];
+        query = mysql.format(query,params);
         connection.query(query,function(err,rows){
             if(err) {
                 res.json({"Error" : true, "Message" : "Error executing MySQL query: "+ err});
@@ -58,8 +58,8 @@ REST_ROUTER.prototype.handleRoutes= function(router,connection,md5) {
                     "SELECT distinct oscars.host FROM oscars WHERE oscars.host like ?; " + 
                     "SELECT distinct nominee.nominee FROM nominee WHERE nominee.nominee like ?; " + 
                     "SELECT distinct nominee.category FROM nominee WHERE nominee.category like ?; ";
-        var table = ['%'+req.query.startsWith+'%', '%'+req.query.startsWith+'%', '%'+req.query.startsWith+'%', '%'+req.query.startsWith+'%'];
-        query = mysql.format(query, table);
+        var params = ['%'+req.query.startsWith+'%', '%'+req.query.startsWith+'%', '%'+req.query.startsWith+'%', '%'+req.query.startsWith+'%'];
+        query = mysql.format(query, params);
 
         connection.query(query,function(err,rows){
             if(err) {
@@ -74,8 +74,8 @@ REST_ROUTER.prototype.handleRoutes= function(router,connection,md5) {
         var query = "SELECT nominee.category, nominee.nominee, nominee.won, " +
                                     "oscars.year, oscars.ceremony_name, oscars.date, oscars.host, oscars.can_predict "+
                                     "FROM nominee, oscars WHERE oscars.id = ? AND nominee.fk_oscars_id = oscars.id";
-        var table = [req.query.id];
-        query = mysql.format(query,table);
+        var params = [req.query.id];
+        query = mysql.format(query,params);
         connection.query(query,function(err,rows){
             if(err) {
                 res.json({"Error" : true, "Message" : "Error executing MySQL query: "+ err});
