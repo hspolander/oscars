@@ -52,6 +52,23 @@ REST_ROUTER.prototype.handleRoutes= function(router,connection,md5) {
             }
         });    
     });
+
+    router.get("/autocompleteSearch",function(req,res){
+        var query = "SELECT distinct oscars.year FROM oscars WHERE oscars.year like ?; " + 
+                    "SELECT distinct oscars.host FROM oscars WHERE oscars.host like ?; " + 
+                    "SELECT distinct nominee.nominee FROM nominee WHERE nominee.nominee like ?; " + 
+                    "SELECT distinct nominee.category FROM nominee WHERE nominee.category like ?; ";
+        var table = ['%'+req.query.startsWith+'%', '%'+req.query.startsWith+'%', '%'+req.query.startsWith+'%', '%'+req.query.startsWith+'%'];
+        query = mysql.format(query, table);
+
+        connection.query(query,function(err,rows){
+            if(err) {
+                res.json({"Error" : true, "Message" : "Error executing MySQL query: "+ err});
+            } else {
+                res.json({"Error" : false, "Message" : "Success", "data" : rows});
+            }
+        });    
+    });
     
     router.get("/getOscarsById",function(req,res){
         var query = "SELECT nominee.category, nominee.nominee, nominee.won, " +
