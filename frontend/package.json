@@ -14,15 +14,20 @@
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
     "node-sass": "^4.5.2",
-    "react": "^0.14.6",
-    "react-dom": "^0.14.6",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-history": "^0.18.2",
+    "react-router": "^4.1.1",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.16.1",
-    "typeahead": "^0.2.2",
-    "webpack": "^1.12.9",
-    "webpack-dev-server": "^1.16.5"
+    "typeahead": "^0.2.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "node-sass": "^4.5.2",
+    "sass-loader": "^6.0.3",
+    "webpack": "^2.5.1",
+    "webpack-dev-server": "^2.4.5"
+  },
   "scripts": {
     "dev": "webpack-dev-server --content-base src --inline --hot",
     "test": "echo \"Error: no test specified\" && exit 1"
