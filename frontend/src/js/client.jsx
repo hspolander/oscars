@@ -7,10 +7,4 @@ import Layout from "./components/Layout";
 const content = document.getElementById('content');
 
 
-ReactDOM.render(<Router history={hashHistory}>
-		<Route path="/" component={Layout}>
-		</Route>
-	</Router>,
-	content);
-
-	//<Layout/>, content);
+ReactDOM.render(<Layout/>,	content);

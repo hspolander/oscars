@@ -1,0 +1,51 @@
+@import "../../../css/util";
+
+.banner-main {
+	height: 95px;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	z-index: 10;
+	background: #FFFFF6;
+	border-bottom: 2px solid #D5D583;
+}
+
+.banner-logo {
+	@extend .center-parent;
+	width: 18%;
+	img {
+		height: 100%;
+	}
+}
+
+.banner-search {
+	width: 76%;
+	input {
+		@extend .center-vertically;
+		size: 16px;
+		left: 80%;
+		padding: 8px;
+		color: #000000;
+		border: 1px solid #e3e3e3;
+		border-radius: 4px;
+		outline: none;
+		&:focus, &:active {
+			border: 2px solid #e7e7e7;
+		}
+	}
+}
+
+.banner-user {
+	@extend .center-parent;
+	width: 6%;
+	border-width: 0 0 0 1px;
+	border-style: solid;
+	border-color: #e3e3e3;
+	background: #FFFFFF;
+	img {
+		@extend .center-horizontally;
+		height: 100%;
+	}
+}
