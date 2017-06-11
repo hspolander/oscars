@@ -70,11 +70,10 @@ REST_ROUTER.prototype.handleRoutes= function(router,connection,md5) {
         });    
     });
     
-    router.get("/getOscarsById",function(req,res){
-        var query = "SELECT nominee.category, nominee.nominee, nominee.won, " +
-                                    "oscars.year, oscars.ceremony_name, oscars.date, oscars.host, oscars.can_predict "+
-                                    "FROM nominee, oscars WHERE oscars.id = ? AND nominee.fk_oscars_id = oscars.id";
-        var params = [req.query.id];
+    router.get("/getOscarsByHost",function(req,res){
+        var query = "SELECT distinct oscars.year, oscars.ceremony_name, oscars.date, oscars.host, oscars.can_predict "+
+                                    "FROM oscars WHERE oscars.host like ?;";
+        var params = ['%'+req.query.host+'%'];
         query = mysql.format(query,params);
         connection.query(query,function(err,rows){
             if(err) {
