@@ -24,7 +24,7 @@ module.exports = function (url, cb) {
      	current_time = d.toLocaleString();
            	
       tableArray = {'ceremony_name': page('#firstHeading').text(),
-     	  'host' : page('.infobox.vevent').find('th:contains("Hosted by")').next().text(),
+     	  'host' : page('.infobox.vevent').find('th:contains("Hosted by")').next().text().replace('[citation needed]',''),
      		'year' : date.match(/(\d{4})/)[0],
      		'date' : date,
         'can_predict' : 1,
